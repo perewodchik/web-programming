@@ -1,0 +1,25 @@
+{
+    "name": "static",
+    "version": "1.0.0",
+    "description": "Web programming",
+    "main": "public/index.html",
+    "scripts": {
+      "start": "serve"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/perewodchik/web-programming.git"
+    },
+    "keywords": [
+      "static"
+    ],
+    "author": "Smirnov Vladislav",
+    "license": "MIT",
+    "bugs": {
+      "url": "perewodchik/web-programming/tree/lesson1/issues"
+    },
+    "homepage": "perewodchik/web-programming/tree/lesson1#readme",
+    "devDependencies": {
+      "serve": "^11.2.0"
+    }
+  }
