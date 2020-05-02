@@ -1,15 +1,17 @@
 /**
  * ДЗ-03 
- */ 
+ *//**
+ * ДЗ-03 
+ */
 
 /**
  * 0. Исправь ошибки
  */
 function initVal(str) {
-    String s = "String";
-    int a = 10;
-    bool b = true;
-    const c = const;
+    let s = "String";
+    let a = 10;
+    let b = true;
+    const c = "const";
 }
 
 /**
@@ -19,7 +21,7 @@ function initVal(str) {
  * @returns (number)
  */
 function stringToNumber(str) {
-
+    return parseInt(str);
 }
 
 /**
@@ -31,17 +33,20 @@ function stringToNumber(str) {
  */
 function checkVal1 (val, def) {
     // 2.1. if ... else
-
+    if(val)
+        return val;
+    else
+        return def;
 }
 
 function checkVal2 (val, def) {
     // 2.2. тернарный оператор
-
+    return (val) ? val : def;
 }
 
 function checkVal3 (val, def) {
     // 2.3. логическое или
-
+    return val || def;
 }
 
 /**
@@ -54,7 +59,7 @@ function checkVal3 (val, def) {
  * @returns {string} строка формата 'Товар title, шириной width, высотой height, коробка' или '... не коробка'
  */
 function renderItem (title, width, height, isBox) {
- 
+    return 'Товар ' + checkVal3(title, "") + ', шириной ' + checkVal3(width, 0) + ', высотой ' + checkVal3(height, 0) + (isBox ? ', коробка' : ', не коробка');
 }
 
 /**
@@ -64,7 +69,12 @@ function renderItem (title, width, height, isBox) {
  * @returns {string} только не четные 1 3 5 7 9 ...max 
  */
 function oddNum (max) {
-    
+    let strAns = "";
+    for(var i = 1; i <= max; i += 2)
+    {
+        strAns += i + ' ';
+    }
+    return strAns.trim();
 }
 
 /**
@@ -74,7 +84,9 @@ function oddNum (max) {
  * @returns {number} факториал 
  */
 function factorial(n) {
-    
+    if(n == 0)
+        return 1;
+    return factorial(n-1) * n;
 }
 
 module.exports = {
