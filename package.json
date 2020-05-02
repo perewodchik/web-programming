@@ -1,14 +1,14 @@
 {
-  "name": "web-programming",
+  "name": "tschool_js_01",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Домашняя работа JavaScript, Часть 1",
+  "main": "homework.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
-  "author": "Smirnov Vladislav",
+  "author": "",
   "license": "ISC",
-  "dependencies": {
-    "express": "^4.17.1"
+  "devDependencies": {
+    "jest": "^25.5.2"
   }
 }
