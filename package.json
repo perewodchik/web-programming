@@ -1,27 +1,14 @@
 {
-  "name": "static",
+  "name": "web-programming",
   "version": "1.0.0",
-  "description": "This is a static template with no bundling",
-  "main": "index.html",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "start": "serve"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/codesandbox-app/static-template.git"
-  },
-  "keywords": [
-    "template",
-    "codesandbox",
-    "static"
-  ],
-  "author": "Ives van Hoorne",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/codesandbox-app/static-template/issues"
-  },
-  "homepage": "https://github.com/codesandbox-app/static-template#readme",
-  "devDependencies": {
-    "serve": "^11.2.0"
+  "author": "Smirnov Vladislav",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
   }
 }
