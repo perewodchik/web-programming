@@ -1,11 +1,9 @@
-class Shinobi {
-    constructor(name, village, rank, birthDate, imgUrl)
+class Person {
+    constructor(params)
     {
-        this.name = name;
-        this.village = village;
-        this.rank = rank;
-        this.birthDate = birthDate;
-        this.imgUrl = imgUrl;
+        this.name = params.name || "no name";  
+        this.birthDate = params.birthDate || new Date(1900,1,1);
+        this.imgUrl = params.imgUrl || "img/default.png";
     }
 
     static cardsMenu() {
@@ -19,8 +17,6 @@ class Shinobi {
         let badgeDescription = document.createElement("div");
         let badgeName = document.createElement("div");
         let badgeBirthDate = document.createElement("div");
-        let badgeVillage = document.createElement("div");
-        let badgeRank = document.createElement("div");
         let badgeImage = document.createElement("img");
 
         badge.classList.add("badge");
@@ -29,23 +25,16 @@ class Shinobi {
         badgeDescription.classList.add("badge__description");
         badgeName.classList.add("badge__name");
         badgeBirthDate.classList.add("badge__birthdate");
-        badgeVillage.classList.add("badge__village");
-        badgeRank.classList.add("badge__rank");
         badgeImage.classList.add("badge__image");
-
+        
         badgeButton.setAttribute("src", "img/X_button.webp");
         badgeName.textContent = this.name;
         badgeBirthDate.textContent = this.birthDate.getDate() + "." + (+this.birthDate.getMonth() + 1) + "." + this.birthDate.getUTCFullYear();
-        badgeVillage.textContent = this.village;
-        badgeRank.textContent = this.rank;
         badgeImage.setAttribute("src", this.imgUrl);
 
         badgeButtonContainer.appendChild(badgeButton);
-
         badgeDescription.appendChild(badgeName);
         badgeDescription.appendChild(badgeBirthDate);
-        badgeDescription.appendChild(badgeVillage);
-        badgeDescription.appendChild(badgeRank);
 
         badge.appendChild(badgeButtonContainer);
         badge.appendChild(badgeDescription);
@@ -73,7 +62,7 @@ class Shinobi {
 
         imgElement.setAttribute("src", this.imgUrl);
         nameElement.textContent = this.name;
-        descElement.textContent = this.village + ", " + this.rank;
+        descElement.textContent = "A Person";
 
         card.appendChild(imgElement);
         card.appendChild(nameElement);
@@ -96,15 +85,174 @@ class Shinobi {
     initialize() {
         Shinobi.cardsMenu().appendChild(this.makeCard());
     }
+}
+
+/* Shinobi has 2 additional fields - village and rank */
+class Shinobi extends Person {
+    constructor(params)
+    {
+        super(params);
+        this.village = params.village || "None";
+        this.rank = params.rank || "No rank";
+    }
+
+    makeCard() {
+        let shinobiCard = super.makeCard();
+        let descElement = shinobiCard.getElementsByClassName("card__description")[0];
+        descElement.textContent = this.village + ", " + this.rank;
+
+        return shinobiCard;
+    }
+
+    makeBadge() {
+        let shinobiBadge = super.makeBadge();
+        let badgeVillage = document.createElement("div");
+        let badgeRank = document.createElement("div");
+        let badgeDescription = shinobiBadge.getElementsByClassName("badge__description")[0];
+       
+        badgeVillage.classList.add("badge__village");
+        badgeRank.classList.add("badge__rank");
+        
+        badgeVillage.textContent = this.village;
+        badgeRank.textContent = this.rank;
+
+        badgeDescription.appendChild(badgeVillage);
+        badgeDescription.appendChild(badgeRank);
+
+        return shinobiBadge;
+    }
+}
+
+/* Has 2 additional field - training team and jutsu */
+class Trainer extends Person {
+    constructor(params)
+    {
+        super(params);
+        this.team = params.team;
+        this.jutsu = params.jutsu;
+    }
+
+    makeCard() {
+        let trainerCard = super.makeCard();
+        let descElement = trainerCard.getElementsByClassName("card__description")[0];
+        descElement.textContent = this.team + ", " + this.jutsu;
+
+        return trainerCard;
+    }
+
+    makeBadge() {
+        let trainerBadge = super.makeBadge();
+        let badgeTeam = document.createElement("div");
+        let badgeJutsu = document.createElement("div");
+        let badgeDescription = trainerBadge.getElementsByClassName("badge__description")[0];
+       
+        badgeTeam.classList.add("badge__team");
+        badgeJutsu.classList.add("badge__jutsu");
+        
+        badgeTeam.textContent = this.team;
+        badgeJutsu.textContent = this.jutsu;
+
+        badgeDescription.appendChild(badgeTeam);
+        badgeDescription.appendChild(badgeJutsu);
+
+        return trainerBadge;
+    }
+}
+
+class PersonFactory {
+    createPerson(params) {
+        return new Person(params);
+    }
+    createShinobi(params) {
+        return new Shinobi(params);
+    }
+    createTrainer(params) {
+        return new Trainer(params);
+    }
+    create(type, params) {
+        let instance;
+        switch(type) {
+            case "shinobi": instance = this.createShinobi(params); break;
+            case "trainer": instance = this.createTrainer(params); break;
+            default: instance = this.createPerson(params); break; 
+        }
+        instance.id = Math.floor(Math.random() * 1024);
+        
+        return instance;
+    }
     
+};
+
+class School {
+    constructor() {
+        this.personArray = [];
+        this.personFactory = new PersonFactory();
+    }
+    
+    add(type,params) {
+        this.personArray.push(this.personFactory.create(type, params));
+    }
+
+    remove(name) {
+        let index = this.personArray.findIndex(function (person) {
+            return person.name == name;
+        });
+        
+        this.personArray.splice(index, 1); 
+    }
+
+    find(name) {
+        return this.personArray.find(function(person) {
+            return person.name == name;
+        });
+    }
+
+    render() {
+        this.personArray.forEach(function(element) {
+            element.initialize();
+        })
+    }
+
 }
 
 window.onload = function(){
-    shinobiArray = [];
-    shinobiArray.push(new Shinobi("Naruto Uzumaki", "Konohagakure", "Hokage", new Date(2000, 05, 13), "img/naruto.jpg"));
-    shinobiArray.push(new Shinobi("Sasuke Uchiha", "Konohagakure", "genin", new Date(1999, 01, 01), "img/sasuke.jpg"));
-    shinobiArray.push(new Shinobi("Sakura Haruno", "Konohagakure", "jonin", new Date(1998, 02, 03), "img/sakura.jpg"));
-    shinobiArray.forEach(function(element) {
-        element.initialize();
+    let  school = new School();
+    school.add("trainer", {
+        name : "Kakashi Hatake",
+        birthDate: new Date(1980, 07,07),
+        imgUrl: "img/kakashi.png",
+        team: "Team 7",
+        jutsu: "Sharingan"
     });
+    school.add("shinobi", {
+        name: "Naruto Uzumaki", 
+        village: "Konohagakure", 
+        rank: "Hokage", 
+        birthDate: new Date(2000, 05, 13), 
+        imgUrl: "img/naruto.jpg"
+    });
+    school.add("shinobi", {
+        name: "Sasuke Uchiha",
+        birthDate: new Date(1999,01,01),
+        imgUrl: "img/sasuke.jpg",
+        rank: "Genin",
+    });
+    school.add("shinobi", {
+        name: "Sakura Haruno",
+        birthDate: new Date(1998, 02, 03),
+        imgUrl: "img/sakura.jpg",
+        rank: "Jonin",
+        village: "Konohagakure"
+    });
+    school.add("Person", {
+        name: "Random Person"
+    });
+    school.add("trainer", {
+        name: "PersonToBeRemoved"
+    })
+
+    school.remove("PersonToBeRemoved");
+
+    school.render();
 };
+

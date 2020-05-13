@@ -136,6 +136,33 @@ body {
     font-size: 16px;
 }
 
+.badge__rank::before {
+    content: "Rank: ";
+    color: grey;
+}
+
+.badge__rank {
+    font-size: 16px;
+}
+
+.badge__team::before {
+    content: "Team: ";
+    color: grey;
+}
+
+.badge__team {
+    font-size: 16px;
+}
+
+.badge__jutsu::before {
+    content: "Jutsu: ";
+    color: grey;
+}
+
+.badge__jutsu {
+    font-size: 16px;
+}
+
 .badge__image {
     margin-left: auto;
     margin-top: 4px;
